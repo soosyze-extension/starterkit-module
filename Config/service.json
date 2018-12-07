@@ -1,0 +1,24 @@
+{
+    "starterkit": {
+        "class": "Starterkit\\Services\\Starterkit",
+        "arguments": [
+            "@query"
+        ]
+    },
+    "starterkit.hook": {
+        "class": "Starterkit\\Services\\StarterkitHook",
+        "arguments": [
+            "@query",
+            "@schema"
+        ],
+        "hooks": {
+        }
+    }, 
+    "starterkit.install": {
+        "class": "Starterkit\\Install",
+        "hooks": {
+            "install.user": "hookInstallUser",
+            "install.menu": "hookInstallMenu"
+        }
+    }
+}

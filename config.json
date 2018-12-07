@@ -1,0 +1,13 @@
+{
+    "Starterkit": {
+        "name": "Starterkit",
+        "controller": {
+            "Starterkit": "Starterkit\\Controller\\Starterkit"
+        },
+        "version": "1.0",
+        "description": "Pour démarrer votre module soosyze avec une base de code. ",
+        "package": "Development",
+        "locked": false,
+        "required": []
+    }
+}

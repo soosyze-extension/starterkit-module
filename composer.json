@@ -1,0 +1,21 @@
+{
+    "name": "soosyze/starterkit-module",
+    "description": "To start a soosyze module with a code base.",
+    "type": "module",
+    "keywords": ["php", "soosyze", "soosyze-module"],
+    "homepage": "http://soosyze.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mathieu NOËL",
+            "email": "mathieu@soosyze.com",
+            "homepage": "http://mathieu-noel.fr"
+        }
+    ],
+    "support": {
+        "email": "mathieu@soosyze.com"
+    },
+    "require": {
+        "php": ">=5.4"
+    }
+}
