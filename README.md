@@ -19,6 +19,7 @@ Pour démarrer un module Soosyze avec une base de code standard.
 ## Routes et contrôleurs
 
 Il s'agit d'une base de travail CRUD (Create/Read/Update/Delete). Il est conseillé, mais pas obligatoire de suivre les mêmes routes et méthodes.
+
 | Route                   | Méthode HTTP* | Contrôleurs@methode | Fonction                                          |
 |-------------------------|---------------|---------------------|---------------------------------------------------|
 | `starterkit/index`      | GET           | `Starterkit@index`  | Page d'accueil du module.                         |
