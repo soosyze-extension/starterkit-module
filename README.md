@@ -9,10 +9,10 @@ Pour démarrer un module Soosyze avec une base de code standard.
 
 # Sommaire
 
-* Requirements
-* Fonctionnalités
-* Installation
-* License
+* [Fonctionnalités](/README.md#fonctionnalites)
+* [Requirements](/README.md#requirements)
+* [Installation](/README.md#installation)
+* [License](/README.md#license)
 
 # Fonctionnalités
 
