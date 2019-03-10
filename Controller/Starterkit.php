@@ -6,7 +6,7 @@ use Soosyze\Components\Form\FormBuilder;
 use Soosyze\Components\Http\Redirect;
 use Soosyze\Components\Validator\Validator;
 
-define('CONFIG_STARTERKIT', MODULES_CONTRIBUED . 'Starterkit' . DS . 'config' . DS);
+define('CONFIG_STARTERKIT', MODULES_CONTRIBUED . 'Starterkit' . DS . 'Config' . DS);
 
 define('VIEWS_STARTERKIT', MODULES_CONTRIBUED . 'Starterkit' . DS . 'Views' . DS);
 
