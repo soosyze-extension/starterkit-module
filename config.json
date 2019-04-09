@@ -5,7 +5,7 @@
             "Starterkit": "Starterkit\\Controller\\Starterkit"
         },
         "version": "1.0",
-        "description": "Pour démarrer votre module soosyze avec une base de code. ",
+        "description": "Pour démarrer votre module Soosyze avec une base de code :<br>CRUD, liens dans les menus, droits utilisateurs, page de configuration. ",
         "package": "Development",
         "locked": false,
         "required": []

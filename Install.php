@@ -23,6 +23,8 @@ class Install
           ->values([ 'value_1', null ])
           ->execute();
           // */
+        $container->config()->set('settings.start_check', '');
+        $container->config()->set('settings.start_text', '');
     }
 
     public function hookInstall($container)
@@ -34,36 +36,20 @@ class Install
     public function hookInstallUser($container)
     {
         if ($container->schema()->hasTable('user')) {
-            $container->query()->insertInto('permission', [
-                    'permission_id',
-                    'permission_label'
-                ])
-                ->values([ 'starterkit.index', 'Voir starterkit' ])
-                ->values([ 'starterkit.admin', 'Voir l\'administration' ])
-                ->values([ 'starterkit.show', 'Voir le contenu' ])
-                ->values([ 'starterkit.create', 'Voir le formulaire d\'ajout' ])
-                ->values([ 'starterkit.store', 'Ajouter' ])
-                ->values([ 'starterkit.edit', 'Voir le formulaire d\'édition' ])
-                ->values([ 'starterkit.update', 'Éditer' ])
-                ->values([ 'starterkit.delete', 'Supprimer' ])
-                ->execute();
-
             $container->query()->insertInto('role_permission', [
                     'role_id',
                     'permission_id'
                 ])
-                ->values([ 1, 'starterkit.index' ])
-                ->values([ 2, 'starterkit.index' ])
                 ->values([ 3, 'starterkit.index' ])
                 ->values([ 3, 'starterkit.admin' ])
-                ->values([ 1, 'starterkit.show' ])
-                ->values([ 2, 'starterkit.show' ])
                 ->values([ 3, 'starterkit.show' ])
-                ->values([ 3, 'starterkit.create' ])
-                ->values([ 3, 'starterkit.store' ])
-                ->values([ 3, 'starterkit.edit' ])
-                ->values([ 3, 'starterkit.update' ])
+                ->values([ 3, 'starterkit.created' ])
+                ->values([ 3, 'starterkit.edited' ])
                 ->values([ 3, 'starterkit.delete' ])
+                ->values([ 2, 'starterkit.index' ])
+                ->values([ 2, 'starterkit.show' ])
+                ->values([ 1, 'starterkit.index' ])
+                ->values([ 1, 'starterkit.show' ])
                 ->execute();
         }
     }
@@ -71,10 +57,11 @@ class Install
     public function hookInstallMenu($container)
     {
         if ($container->schema()->hasTable('menu')) {
-            $container->query()->insertInto('menu_link', [ 'title_link', 'link',
+            $container->query()->insertInto('menu_link', [ 'key', 'title_link', 'link',
                     'menu', 'weight', 'parent' ])
                 ->values([
-                    '<span class="glyphicon glyphicon-send" aria-hidden="true"></span> Starterkit',
+                    'starterkit.admin',
+                    '<i class="fa fa-send"></i> Starterkit',
                     'admin/starterkit',
                     'admin-menu',
                     50,
@@ -82,9 +69,10 @@ class Install
                 ])
                 ->execute();
 
-            $container->query()->insertInto('menu_link', [ 'title_link', 'link',
+            $container->query()->insertInto('menu_link', [ 'key', 'title_link', 'link',
                     'menu', 'weight', 'parent' ])
                 ->values([
+                    'starterkit.index',
                     'Starterkit',
                     'starterkit/index',
                     'main-menu',
@@ -98,12 +86,6 @@ class Install
     public function uninstall($container)
     {
         if ($container->schema()->hasTable('user')) {
-            $container->query()
-                ->from('permission')
-                ->delete()
-                ->where('permission_id', 'like', 'starterkit%')
-                ->execute();
-
             $container->query()
                 ->from('role_permission')
                 ->delete()

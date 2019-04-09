@@ -5,15 +5,28 @@
             "@query"
         ]
     },
-    "starterkit.hook": {
-        "class": "Starterkit\\Services\\StarterkitHook",
+    "starterkit.hook.config": {
+        "class": "Starterkit\\Services\\HookConfig",
         "arguments": [
-            "@query",
-            "@schema"
+            "@config"
         ],
         "hooks": {
+            "config.edit.menu": "menu",
+            "config.edit.starterkit.form.generate": "form",
+            "config.update.starterkit.validator": "validator",
+            "config.update.starterkit.before": "before"
         }
-    }, 
+    },
+    "starterkit.hook.user": {
+        "class": "Starterkit\\Services\\HookUser",
+        "hooks": {
+            "user.permission.module": "hookPermission",
+            "route.starterkit.created": "hookStarterkitCreated",
+            "route.starterkit.store": "hookStarterkitCreate",
+            "route.starterkit.edit": "hookStarterkitEdited",
+            "route.starterkit.update": "hookStarterkitEdited"
+        }
+    },
     "starterkit.install": {
         "class": "Starterkit\\Install",
         "hooks": {

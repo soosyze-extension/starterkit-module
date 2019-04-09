@@ -26,7 +26,6 @@ class Starterkit extends \Soosyze\Controller
         $linkShow = self::router()->getRoute('starterkit.show', [ ':id' => 1 ]);
 
         return self::template()
-                ->setTheme(false)
                 ->view('page', [
                     'title_main' => 'Starterkit index'
                 ])
@@ -44,7 +43,7 @@ class Starterkit extends \Soosyze\Controller
         $linkEdit   = self::router()->getRoute('starterkit.edit', [ ':id' => 1 ]);
 
         return self::template()
-                ->setTheme()
+                ->getTheme('theme_admin')
                 ->view('page', [
                     'title_main' => 'Starterkit admin',
                 ])
@@ -60,7 +59,6 @@ class Starterkit extends \Soosyze\Controller
     public function show($id, $req)
     {
         return self::template()
-                ->setTheme(false)
                 ->view('page', [
                     'title_main' => 'Starterkit content ' . $id,
                 ])
@@ -91,7 +89,7 @@ class Starterkit extends \Soosyze\Controller
             ->submit('submit', 'Enregistrer', [ 'class' => 'btn btn-success' ]);
 
         return self::template()
-                ->setTheme()
+                ->getTheme('theme_admin')
                 ->view('page', [
                     'title_main' => 'Starterkit create'
                 ])
@@ -133,7 +131,7 @@ class Starterkit extends \Soosyze\Controller
             ->submit('submit', 'Enregistrer', [ 'class' => 'btn btn-success' ]);
 
         return self::template()
-                ->setTheme()
+                ->getTheme('theme_admin')
                 ->view('page', [
                     'title_main' => 'Starterkit edit ' . $id
                 ])
