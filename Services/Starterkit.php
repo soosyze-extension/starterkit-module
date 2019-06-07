@@ -1,6 +1,6 @@
 <?php
 
-namespace Starterkit\Services;
+namespace SoosyzeExtension\Starterkit\Services;
 
 class Starterkit
 {

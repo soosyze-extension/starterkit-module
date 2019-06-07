@@ -14,7 +14,7 @@
         "path": "starterkit/:id",
         "uses": "Starterkit@show",
         "with": {
-            ":id": "[0-9]+"
+            ":id": "\\d+"
         }
     },
     "starterkit.create": {
@@ -32,7 +32,7 @@
         "path": "starterkit/:id/edit",
         "uses": "Starterkit@edit",
         "with": {
-            ":id": "[0-9]+"
+            ":id": "\\d+"
         }
     },
     "starterkit.update": {
@@ -40,7 +40,7 @@
         "path": "starterkit/:id/edit",
         "uses": "Starterkit@update",
         "with": {
-            ":id": "[0-9]+"
+            ":id": "\\d+"
         }
     },
     "starterkit.delete": {
@@ -48,7 +48,7 @@
         "path": "starterkit/:id/delete",
         "uses": "Starterkit@delete",
         "with": {
-            ":id": "[0-9]+"
+            ":id": "\\d+"
         }
     }
 }

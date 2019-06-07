@@ -1,21 +1,18 @@
 <?php
 
-namespace Starterkit\Controller;
+namespace SoosyzeExtension\Starterkit\Controller;
 
 use Soosyze\Components\Form\FormBuilder;
 use Soosyze\Components\Http\Redirect;
 use Soosyze\Components\Validator\Validator;
 
-define('CONFIG_STARTERKIT', MODULES_CONTRIBUED . 'Starterkit' . DS . 'Config' . DS);
-
-define('VIEWS_STARTERKIT', MODULES_CONTRIBUED . 'Starterkit' . DS . 'Views' . DS);
-
 class Starterkit extends \Soosyze\Controller
 {
     public function __construct()
     {
-        $this->pathServices = CONFIG_STARTERKIT . 'service.json';
-        $this->pathRoutes   = CONFIG_STARTERKIT . 'routing.json';
+        $this->pathServices = dirname(__DIR__) . '/Config/service.json';
+        $this->pathRoutes   = dirname(__DIR__) . '/Config/routing.json';
+        $this->pathViews    = dirname(__DIR__) . '/Views/';
     }
 
     /**
@@ -29,7 +26,7 @@ class Starterkit extends \Soosyze\Controller
                 ->view('page', [
                     'title_main' => 'Starterkit index'
                 ])
-                ->render('page.content', 'page-starterkit-index.php', VIEWS_STARTERKIT, [
+                ->render('page.content', 'page-starterkit-index.php', $this->pathViews, [
                     'link_show' => $linkShow
         ]);
     }
@@ -47,7 +44,7 @@ class Starterkit extends \Soosyze\Controller
                 ->view('page', [
                     'title_main' => 'Starterkit admin',
                 ])
-                ->render('page.content', 'page-starterkit-admin.php', VIEWS_STARTERKIT, [
+                ->render('page.content', 'page-starterkit-admin.php', $this->pathViews, [
                     'link_create' => $linkCreate,
                     'link_edit'   => $linkEdit
         ]);
@@ -62,7 +59,7 @@ class Starterkit extends \Soosyze\Controller
                 ->view('page', [
                     'title_main' => 'Starterkit content ' . $id,
                 ])
-                ->render('page.content', 'page-starterkit-show.php', VIEWS_STARTERKIT, [
+                ->render('page.content', 'page-starterkit-show.php', $this->pathViews, [
                     'id' => $id
         ]);
     }
@@ -93,7 +90,7 @@ class Starterkit extends \Soosyze\Controller
                 ->view('page', [
                     'title_main' => 'Starterkit create'
                 ])
-                ->render('page.content', 'form-starterkit-create.php', VIEWS_STARTERKIT, [
+                ->render('page.content', 'form-starterkit-create.php', $this->pathViews, [
                     'form' => $form
         ]);
     }
@@ -135,7 +132,7 @@ class Starterkit extends \Soosyze\Controller
                 ->view('page', [
                     'title_main' => 'Starterkit edit ' . $id
                 ])
-                ->render('page.content', 'form-starterkit-edit.php', VIEWS_STARTERKIT, [
+                ->render('page.content', 'form-starterkit-edit.php', $this->pathViews, [
                     'form' => $form
         ]);
     }

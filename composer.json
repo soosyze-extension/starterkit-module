@@ -1,21 +1,24 @@
 {
-    "name": "soosyze/starterkit-module",
-    "description": "To start a soosyze module with a code base.",
-    "type": "module",
-    "keywords": ["php", "soosyze", "soosyze-module"],
-    "homepage": "http://soosyze.com",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Mathieu NOËL",
-            "email": "mathieu@soosyze.com",
-            "homepage": "http://mathieu-noel.fr"
+    "name": "soosyze-extension/starterkit",
+    "type": "soosyze-module",
+    "description": "Pour démarrer votre module Soosyze avec une base de code (CRUD, liens dans les menus, droits utilisateurs, page de configuration).",
+    "version": "1.0",
+    "autoload": {
+        "psr-4": {
+            "SoosyzeExtension\\Starterkit": ""
         }
-    ],
-    "support": {
-        "email": "mathieu@soosyze.com"
     },
-    "require": {
-        "php": ">=5.4"
+    "extra": {
+        "soosyze-module": {
+            "title": "Starterkit",
+            "package": "Development",
+            "controllers": {
+                "Starterkit": "SoosyzeExtension\\Starterkit\\Controller\\Starterkit"
+            },
+            "icon": {
+                "background-color": "#222351",
+                "color": "#fff"
+            }
+        }
     }
 }

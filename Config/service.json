@@ -1,12 +1,12 @@
 {
     "starterkit": {
-        "class": "Starterkit\\Services\\Starterkit",
+        "class": "SoosyzeExtension\\Starterkit\\Services\\Starterkit",
         "arguments": [
             "@query"
         ]
     },
     "starterkit.hook.config": {
-        "class": "Starterkit\\Services\\HookConfig",
+        "class": "SoosyzeExtension\\Starterkit\\Services\\HookConfig",
         "arguments": [
             "@config"
         ],
@@ -18,7 +18,7 @@
         }
     },
     "starterkit.hook.user": {
-        "class": "Starterkit\\Services\\HookUser",
+        "class": "SoosyzeExtension\\Starterkit\\Services\\HookUser",
         "hooks": {
             "user.permission.module": "hookPermission",
             "route.starterkit.created": "hookStarterkitCreated",
@@ -28,7 +28,7 @@
         }
     },
     "starterkit.install": {
-        "class": "Starterkit\\Install",
+        "class": "SoosyzeExtension\\Starterkit\\Install",
         "hooks": {
             "install.user": "hookInstallUser",
             "install.menu": "hookInstallMenu"

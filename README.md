@@ -35,8 +35,9 @@ Il s'agit d'une base de travail CRUD (Create/Read/Update/Delete). Il est conseil
 
 ## Services
 
-* `starterkit` une base de service simple avec comme dépendance le service `query` pour créer des requêtes.
-* `starterkit.hook` une base de service pour vos hooks avec comme dépendances les services `schema` et `query`. Il vous permet d'interagir avec les autres modules appelant des hooks.
+* `starterkit` une base de service simple avec comme dépendance le service `query` pour créer des requêtes,
+* `starterkit.hook.config` service utilisant les hooks du module de configuration,
+* `starterkit.hook.user` service utilisant les hooks du module utilisateur pour les permissions,
 * `starterkit.install` pour les appels aux hooks `install.user` (pour les permissions utilisateurs) et `install.menu` (pour les liens dans le menu).
 
 ## Installateur
@@ -60,6 +61,7 @@ Il implémente également le hook `install.menu` pour créer un lien dans le men
 ## Vues
 
 Le module est fournit avec 4 vues de base :
+
 * `form-starterkit-create.php` pour le formulaire de création,
 * `form-starterkit-edit.php` pour le formulaire d'édition,
 * `page-starterkit-admin.php` pour votre page d'administration,
