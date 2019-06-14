@@ -5,9 +5,8 @@ namespace SoosyzeExtension\Starterkit;
 use Psr\Container\ContainerInterface;
 use Queryflatfile\TableBuilder;
 
-class Install implements \SoosyzeCore\System\Migration
+class Installer implements \SoosyzeCore\System\Migration
 {
-
     public function getComposer()
     {
         return __DIR__ . '/composer.json';
@@ -36,9 +35,8 @@ class Install implements \SoosyzeCore\System\Migration
             ->set('settings.start_text', '');
     }
 
-    public function seeders( ContainerInterface $ci )
+    public function seeders(ContainerInterface $ci)
     {
-
     }
 
     public function hookInstall(ContainerInterface $ci)
@@ -70,8 +68,8 @@ class Install implements \SoosyzeCore\System\Migration
     {
         if ($ci->module()->has('Menu')) {
             $ci->query()
-                ->insertInto('menu_link', [ 
-                    'key', 'title_link', 'link', 'menu', 'weight', 'parent' 
+                ->insertInto('menu_link', [
+                    'key', 'title_link', 'link', 'menu', 'weight', 'parent'
                 ])
                 ->values([
                     'starterkit.admin',
