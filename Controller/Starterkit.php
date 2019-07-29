@@ -82,7 +82,7 @@ class Starterkit extends \Soosyze\Controller
                     'required'    => 1
                 ]);
             }, [ 'class' => 'form-group' ])
-            ->token()
+            ->token('starterkit_create')
             ->submit('submit', 'Enregistrer', [ 'class' => 'btn btn-success' ]);
 
         return self::template()
@@ -124,7 +124,7 @@ class Starterkit extends \Soosyze\Controller
                     'value'       => $id
                 ]);
             }, [ 'class' => 'form-group' ])
-            ->token()
+            ->token('starterkit_edit')
             ->submit('submit', 'Enregistrer', [ 'class' => 'btn btn-success' ]);
 
         return self::template()

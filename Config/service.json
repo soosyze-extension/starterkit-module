@@ -21,8 +21,8 @@
         "class": "SoosyzeExtension\\Starterkit\\Services\\HookUser",
         "hooks": {
             "user.permission.module": "hookPermission",
-            "route.starterkit.created": "hookStarterkitCreated",
-            "route.starterkit.store": "hookStarterkitCreate",
+            "route.starterkit.create": "hookStarterkitCreated",
+            "route.starterkit.store": "hookStarterkitCreated",
             "route.starterkit.edit": "hookStarterkitEdited",
             "route.starterkit.update": "hookStarterkitEdited"
         }

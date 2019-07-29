@@ -42,15 +42,16 @@ class HookConfig
                         ]);
                     }, [ 'class' => 'form-group' ]);
         })
-                ->token()
+                ->token('config_starterkit')
                 ->submit('submit', 'Enregistrer', [ 'class' => 'btn btn-success' ]);
     }
 
     public function validator(&$validator)
     {
         $validator->setRules([
-            'start_check' => '!required|bool',
-            'start_text'  => 'required|string|max:255'
+            'start_check'       => '!required|bool',
+            'start_text'        => 'required|string|max:255',
+            'config_starterkit' => 'token'
         ]);
     }
 

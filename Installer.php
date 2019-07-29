@@ -69,23 +69,13 @@ class Installer implements \SoosyzeCore\System\Migration
         if ($ci->module()->has('Menu')) {
             $ci->query()
                 ->insertInto('menu_link', [
-                    'key', 'title_link', 'link', 'menu', 'weight', 'parent'
+                    'key', 'icon', 'title_link', 'link', 'menu', 'weight', 'parent'
                 ])
                 ->values([
-                    'starterkit.admin',
-                    '<i class="fa fa-puzzle-piece"></i> Starterkit',
-                    'admin/starterkit',
-                    'admin-menu',
-                    50,
-                    -1
+                    'starterkit.admin', 'fa fa-puzzle-piece', 'Starterkit', 'admin/starterkit', 'menu-admin', 50, -1
                 ])
                 ->values([
-                    'starterkit.index',
-                    'Starterkit',
-                    'starterkit/index',
-                    'main-menu',
-                    50,
-                    -1
+                    'starterkit.index', null, 'Starterkit', 'starterkit/index', 'menu-admin', 50, 1
                 ])
                 ->execute();
         }
