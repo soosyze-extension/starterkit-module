@@ -75,7 +75,7 @@ class Starterkit extends \Soosyze\Controller
             ->group('menu-link-title-group', 'div', function ($form) {
                 $form->label('menu-link-title-label', 'Texte', [
                     'for' => 'text' ])
-                ->text('text', 'text', [
+                ->text('text', [
                     'class'       => 'form-control',
                     'maxlength'   => 255,
                     'placeholder' => 'Champ d\'exemple',
@@ -116,7 +116,7 @@ class Starterkit extends \Soosyze\Controller
             ->group('menu-link-title-group', 'div', function ($form) use ($id) {
                 $form->label('menu-link-title-label', 'Texte', [
                     'for' => 'text' ])
-                ->text('text', 'text', [
+                ->text('text', [
                     'class'       => 'form-control',
                     'maxlength'   => 255,
                     'placeholder' => 'Champ d\'exemple',
