@@ -27,14 +27,14 @@ class HookConfig
         return $form->group('start-config-fieldset', 'fieldset', function ($form) use ($data) {
             $form->legend('start-config-legend', 'Starterkit config')
                     ->group('start-start_check-group', 'div', function ($form) use ($data) {
-                        $form->checkbox('start_check', 'start_check', [ 'checked' => $data[ 'start_check' ] ])
+                        $form->checkbox('start_check', [ 'checked' => $data[ 'start_check' ] ])
                         ->label('start-start_check-label', '<span class="ui"></span> Start check.', [
                             'for' => 'start_check'
                         ]);
                     }, [ 'class' => 'form-group' ])
                     ->group('system-start_text-group', 'div', function ($form) use ($data) {
                         $form->label('system-start_text-label', 'Start text')
-                        ->text('start_text', 'start_text', [
+                        ->text('start_text', [
                             'class'       => 'form-control',
                             'required'    => 1,
                             'placeholder' => 'Text exemple',
