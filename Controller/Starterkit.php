@@ -24,9 +24,9 @@ class Starterkit extends \Soosyze\Controller
 
         return self::template()
                 ->view('page', [
-                    'title_main' => 'Starterkit index'
+                    'title_main' => t('Starterkit index')
                 ])
-                ->render('page.content', 'page-starterkit-index.php', $this->pathViews, [
+                ->make('page.content', 'page-starterkit-index.php', $this->pathViews, [
                     'link_show' => $linkShow
         ]);
     }
@@ -42,9 +42,9 @@ class Starterkit extends \Soosyze\Controller
         return self::template()
                 ->getTheme('theme_admin')
                 ->view('page', [
-                    'title_main' => 'Starterkit admin',
+                    'title_main' => t('Starterkit admin'),
                 ])
-                ->render('page.content', 'page-starterkit-admin.php', $this->pathViews, [
+                ->make('page.content', 'page-starterkit-admin.php', $this->pathViews, [
                     'link_create' => $linkCreate,
                     'link_edit'   => $linkEdit
         ]);
@@ -59,7 +59,7 @@ class Starterkit extends \Soosyze\Controller
                 ->view('page', [
                     'title_main' => 'Starterkit content ' . $id,
                 ])
-                ->render('page.content', 'page-starterkit-show.php', $this->pathViews, [
+                ->make('page.content', 'page-starterkit-show.php', $this->pathViews, [
                     'id' => $id
         ]);
     }
@@ -78,19 +78,19 @@ class Starterkit extends \Soosyze\Controller
                 ->text('text', [
                     'class'       => 'form-control',
                     'maxlength'   => 255,
-                    'placeholder' => 'Champ d\'exemple',
+                    'placeholder' => 'Field example',
                     'required'    => 1
                 ]);
             }, [ 'class' => 'form-group' ])
             ->token('starterkit_create')
-            ->submit('submit', 'Enregistrer', [ 'class' => 'btn btn-success' ]);
+            ->submit('submit', t('Save'), [ 'class' => 'btn btn-success' ]);
 
         return self::template()
                 ->getTheme('theme_admin')
                 ->view('page', [
-                    'title_main' => 'Starterkit create'
+                    'title_main' => t('Starterkit create')
                 ])
-                ->render('page.content', 'form-starterkit-create.php', $this->pathViews, [
+                ->make('page.content', 'form-starterkit-create.php', $this->pathViews, [
                     'form' => $form
         ]);
     }
@@ -119,20 +119,20 @@ class Starterkit extends \Soosyze\Controller
                 ->text('text', [
                     'class'       => 'form-control',
                     'maxlength'   => 255,
-                    'placeholder' => 'Champ d\'exemple',
+                    'placeholder' => 'Field example',
                     'required'    => 1,
                     'value'       => $id
                 ]);
             }, [ 'class' => 'form-group' ])
             ->token('starterkit_edit')
-            ->submit('submit', 'Enregistrer', [ 'class' => 'btn btn-success' ]);
+            ->submit('submit', t('Save'), [ 'class' => 'btn btn-success' ]);
 
         return self::template()
                 ->getTheme('theme_admin')
                 ->view('page', [
-                    'title_main' => 'Starterkit edit ' . $id
+                    'title_main' => t('Starterkit edit :id', [':id' => $id])
                 ])
-                ->render('page.content', 'form-starterkit-edit.php', $this->pathViews, [
+                ->make('page.content', 'form-starterkit-edit.php', $this->pathViews, [
                     'form' => $form
         ]);
     }

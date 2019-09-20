@@ -16,8 +16,7 @@ class HookConfig
 
     public function menu(&$menu)
     {
-        $menu[] = [
-            'key'        => 'starterkit',
+        $menu['starterkit'] = [
             'title_link' => 'Starterkit'
         ];
     }
@@ -25,25 +24,24 @@ class HookConfig
     public function form(&$form, $data)
     {
         return $form->group('start-config-fieldset', 'fieldset', function ($form) use ($data) {
-            $form->legend('start-config-legend', 'Starterkit config')
+            $form->legend('start-config-legend', t('Starterkit config'))
                     ->group('start-start_check-group', 'div', function ($form) use ($data) {
                         $form->checkbox('start_check', [ 'checked' => $data[ 'start_check' ] ])
-                        ->label('start-start_check-label', '<span class="ui"></span> Start check.', [
+                        ->label('start-start_check-label', '<span class="ui"></span> ' . t('Start check.'), [
                             'for' => 'start_check'
                         ]);
                     }, [ 'class' => 'form-group' ])
                     ->group('system-start_text-group', 'div', function ($form) use ($data) {
-                        $form->label('system-start_text-label', 'Start text')
+                        $form->label('system-start_text-label', t('Start text'))
                         ->text('start_text', [
                             'class'       => 'form-control',
                             'required'    => 1,
-                            'placeholder' => 'Text exemple',
                             'value'       => $data[ 'start_text' ]
                         ]);
                     }, [ 'class' => 'form-group' ]);
         })
                 ->token('config_starterkit')
-                ->submit('submit', 'Enregistrer', [ 'class' => 'btn btn-success' ]);
+                ->submit('submit', t('Save'), [ 'class' => 'btn btn-success' ]);
     }
 
     public function validator(&$validator)
