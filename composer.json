@@ -9,12 +9,10 @@
         }
     },
     "extra": {
-        "soosyze-module": {
+        "soosyze": {
             "title": "Starterkit",
             "package": "Development",
-            "controllers": {
-                "Starterkit": "SoosyzeExtension\\Starterkit\\Controller\\Starterkit"
-            },
+            "controller": "SoosyzeExtension\\Starterkit\\Controller\\Starterkit",
             "icon": {
                 "background-color": "#222351",
                 "color": "#fff"
