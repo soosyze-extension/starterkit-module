@@ -11,24 +11,17 @@ class Installer implements \SoosyzeCore\System\Migration
     {
         return __DIR__ . '/composer.json';
     }
-    
+
     public function install(ContainerInterface $ci)
     {
         /* Ajoute une table et insert des données.
           $ci->schema()
-             ->createTableIfNotExists('starterkit', function (TableBuilder $table) {
+            ->createTableIfNotExists('starterkit', function (TableBuilder $table) {
                 $table->increments('id')
                 ->string('field_1')
                 ->integer('field_2')->nullable()
                 ->boolean('field_3')->valueDefault(false);
-              });
-
-          $ci->query()
-            ->insertInto('starterkit', [ 'field_1', 'field_2' ])
-            ->values([ 'value_1', 1 ])
-            ->values([ 'value_1', 2 ])
-            ->values([ 'value_1', null ])
-            ->execute();
+          });
           // */
         $ci->config()
             ->set('settings.start_check', '')
@@ -37,12 +30,39 @@ class Installer implements \SoosyzeCore\System\Migration
 
     public function seeders(ContainerInterface $ci)
     {
+        /* Ajout des données
+          $ci->query()
+          ->insertInto('starterkit', [ 'field_1', 'field_2' ])
+          ->values([ 'value_1', 1 ])
+          ->values([ 'value_1', 2 ])
+          ->values([ 'value_1', null ])
+          ->execute();
+          // */
     }
 
     public function hookInstall(ContainerInterface $ci)
     {
-        $this->hookInstallUser($ci);
         $this->hookInstallMenu($ci);
+        $this->hookInstallUser($ci);
+    }
+
+    public function hookInstallMenu(ContainerInterface $ci)
+    {
+        if ($ci->module()->has('Menu')) {
+            $ci->query()
+                ->insertInto('menu_link', [
+                    'key', 'icon', 'title_link', 'link', 'menu', 'weight', 'parent'
+                ])
+                ->values([
+                    'starterkit.admin', 'fa fa-puzzle-piece', 'Starterkit', 'admin/starterkit',
+                    'menu-admin', 50, -1
+                ])
+                ->values([
+                    'starterkit.index', null, 'Starterkit', 'starterkit/index', 'menu-admin',
+                    50, 1
+                ])
+                ->execute();
+        }
     }
 
     public function hookInstallUser(ContainerInterface $ci)
@@ -60,23 +80,6 @@ class Installer implements \SoosyzeCore\System\Migration
                 ->values([ 2, 'starterkit.show' ])
                 ->values([ 1, 'starterkit.index' ])
                 ->values([ 1, 'starterkit.show' ])
-                ->execute();
-        }
-    }
-
-    public function hookInstallMenu(ContainerInterface $ci)
-    {
-        if ($ci->module()->has('Menu')) {
-            $ci->query()
-                ->insertInto('menu_link', [
-                    'key', 'icon', 'title_link', 'link', 'menu', 'weight', 'parent'
-                ])
-                ->values([
-                    'starterkit.admin', 'fa fa-puzzle-piece', 'Starterkit', 'admin/starterkit', 'menu-admin', 50, -1
-                ])
-                ->values([
-                    'starterkit.index', null, 'Starterkit', 'starterkit/index', 'menu-admin', 50, 1
-                ])
                 ->execute();
         }
     }
@@ -105,7 +108,7 @@ class Installer implements \SoosyzeCore\System\Migration
                 ->execute();
         }
     }
-    
+
     public function hookUninstallUser(ContainerInterface $ci)
     {
         if ($ci->module()->has('User')) {

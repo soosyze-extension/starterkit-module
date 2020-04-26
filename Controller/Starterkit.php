@@ -4,6 +4,7 @@ namespace SoosyzeExtension\Starterkit\Controller;
 
 use Soosyze\Components\Form\FormBuilder;
 use Soosyze\Components\Http\Redirect;
+use Soosyze\Components\Http\ServerRequest;
 use Soosyze\Components\Validator\Validator;
 
 class Starterkit extends \Soosyze\Controller
@@ -15,10 +16,7 @@ class Starterkit extends \Soosyze\Controller
         $this->pathViews    = dirname(__DIR__) . '/Views/';
     }
 
-    /**
-     * Page d'accueil du module.
-     */
-    public function index($req)
+    public function index(ServerRequest $req)
     {
         $linkShow = self::router()->getRoute('starterkit.show', [ ':id' => 1 ]);
 
@@ -31,10 +29,7 @@ class Starterkit extends \Soosyze\Controller
         ]);
     }
 
-    /**
-     * Page d'administration du module.
-     */
-    public function admin($req)
+    public function admin(ServerRequest $req)
     {
         $linkCreate = self::router()->getRoute('starterkit.create');
         $linkEdit   = self::router()->getRoute('starterkit.edit', [ ':id' => 1 ]);
@@ -50,10 +45,7 @@ class Starterkit extends \Soosyze\Controller
         ]);
     }
 
-    /**
-     * Page pour voir un contenu du module.
-     */
-    public function show($id, $req)
+    public function show($id, ServerRequest $req)
     {
         return self::template()
                 ->view('page', [
@@ -64,24 +56,25 @@ class Starterkit extends \Soosyze\Controller
         ]);
     }
 
-    /**
-     * Formulaire de création du module.
-     */
-    public function create($req)
+    public function create(ServerRequest $req)
     {
         $action = self::router()->getRoute('starterkit.store');
 
         $form = (new FormBuilder([ 'method' => 'post', 'action' => $action ]))
-            ->group('menu-link-title-group', 'div', function ($form) {
-                $form->label('menu-link-title-label', 'Texte', [
-                    'for' => 'text' ])
-                ->text('text', [
-                    'class'       => 'form-control',
-                    'maxlength'   => 255,
-                    'placeholder' => 'Field example',
-                    'required'    => 1
-                ]);
-            }, [ 'class' => 'form-group' ])
+            ->group('start-config-fieldset', 'fieldset', function ($form) {
+                $form->legend('start-config-legend', t('Starterkit config'))
+                ->group('title-group', 'div', function ($form) {
+                    $form->label('title-label', 'Title', [
+                        'for' => 'title'
+                    ])
+                    ->text('title', [
+                        'class'       => 'form-control',
+                        'maxlength'   => 255,
+                        'placeholder' => 'Field example',
+                        'required'    => 1
+                    ]);
+                }, [ 'class' => 'form-group' ]);
+            })
             ->token('starterkit_create')
             ->submit('submit', t('Save'), [ 'class' => 'btn btn-success' ]);
 
@@ -95,28 +88,23 @@ class Starterkit extends \Soosyze\Controller
         ]);
     }
 
-    /**
-     * Fonction de validation et d'ajout du module.
-     */
-    public function store($req)
+    public function store(ServerRequest $req)
     {
         $route = self::router()->getRoute('starterkit.admin');
 
         return new Redirect($route);
     }
 
-    /**
-     * Formulaire d'édition du module.
-     */
-    public function edit($id, $req)
+    public function edit($id, ServerRequest $req)
     {
         $action = self::router()->getRoute('starterkit.edit', [ ':id' => $id ]);
 
         $form = (new FormBuilder([ 'method' => 'post', 'action' => $action ]))
-            ->group('menu-link-title-group', 'div', function ($form) use ($id) {
-                $form->label('menu-link-title-label', 'Texte', [
-                    'for' => 'text' ])
-                ->text('text', [
+            ->group('title-group', 'div', function ($form) use ($id) {
+                $form->label('title-label', 'Title', [
+                    'for' => 'title'
+                ])
+                ->text('title', [
                     'class'       => 'form-control',
                     'maxlength'   => 255,
                     'placeholder' => 'Field example',
@@ -130,27 +118,21 @@ class Starterkit extends \Soosyze\Controller
         return self::template()
                 ->getTheme('theme_admin')
                 ->view('page', [
-                    'title_main' => t('Starterkit edit :id', [':id' => $id])
+                    'title_main' => t('Starterkit edit :id', [ ':id' => $id ])
                 ])
                 ->make('page.content', 'form-starterkit-edit.php', $this->pathViews, [
                     'form' => $form
         ]);
     }
 
-    /**
-     * Fonction de validation et modification du module.
-     */
-    public function update($id, $req)
+    public function update($id, ServerRequest $req)
     {
         $route = self::router()->getRoute('starterkit.admin');
 
         return new Redirect($route);
     }
 
-    /**
-     * Fonction de validation et suppression du module.
-     */
-    public function delete($id, $req)
+    public function delete($id, ServerRequest $req)
     {
         $route = self::router()->getRoute('starterkit.admin');
 
