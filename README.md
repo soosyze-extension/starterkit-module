@@ -20,16 +20,16 @@ Pour démarrer un module Soosyze avec une base de code standard.
 
 Il s'agit d'une base de travail CRUD (Create/Read/Update/Delete). Il est conseillé, mais pas obligatoire de suivre les mêmes routes et méthodes.
 
-| Route                   | Méthode HTTP* | Contrôleurs@methode | Fonction                                          |
-|-------------------------|---------------|---------------------|---------------------------------------------------|
-| `starterkit/index`      | GET           | `Starterkit@index`  | Page d'accueil du module.                         |
-| `admin/starterkit`      | GET           | `Starterkit@admin`  | Page d'administration du module.                  |
-| `starterkit/:id`        | GET           | `Starterkit@show`   | Page de contenu.                                  |
-| `starterkit/item`       | GET           | `Starterkit@create` | Formulaire de création du module.                 |
-| `starterkit/item`       | POST          | `Starterkit@store`  | Fonction de validation et d'ajout du module.      |
-| `starterkit/:id/edit`   | GET           | `Starterkit@edit`   | Formulaire d'édition de votre module.             |
-| `starterkit/:id/edit`   | POST          | `Starterkit@update` | Fonction de validation et modification du module. |
-| `starterkit/:id/delete` | POST          | `Starterkit@delete` | Fonction de validation et suppression du module.  |
+| Route                         | Méthode HTTP* | Contrôleurs@methode | Fonction                                          |
+|-------------------------------|---------------|---------------------|---------------------------------------------------|
+| `starterkit/index`            | GET           | `Starterkit@index`  | Page d'accueil du module.                         |
+| `starterkit/:id`              | GET           | `Starterkit@show`   | Page de contenu.                                  |
+| `admin/starterkit`            | GET           | `Starterkit@admin`  | Page d'administration du module.                  |
+| `admin/starterkit/item`       | GET           | `Starterkit@create` | Formulaire de création du module.                 |
+| `admin/starterkit/item`       | POST          | `Starterkit@store`  | Fonction de validation et d'ajout du module.      |
+| `admin/starterkit/:id/edit`   | GET           | `Starterkit@edit`   | Formulaire d'édition de votre module.             |
+| `admin/starterkit/:id/edit`   | POST          | `Starterkit@update` | Fonction de validation et modification du module. |
+| `admin/starterkit/:id/delete` | POST          | `Starterkit@delete` | Fonction de validation et suppression du module.  |
 
 *Vous pouvez utiliser les méthodes HTTP que vous souhaitez, mais seules les actions GET et POST sont fonctionnelles avec les formulaires PHP.
 
@@ -45,16 +45,13 @@ Il s'agit d'une base de travail CRUD (Create/Read/Update/Delete). Il est conseil
 La classe d'installateur est un service pour créer vos tables en base et insérer vos données.
 Il implémente le hook `install.user` pour les permissions utilisateurs.
 
-| Nom des permissions   | Utilisateurs autorisés                                    |
-|-----------------------|-----------------------------------------------------------|
-| `starterkit.index `   | Utilisateurs non connectés, connectés et administrateurs  |
-| `starterkit.admin`    | Administrateurs                                           |
-| `starterkit.show`     | Utilisateurs non connectés, connectés et administrateurs  |
-| `starterkit.create`   | Administrateurs                                           |
-| `starterkit.store`    | Administrateurs                                           |
-| `starterkit.edit`     | Administrateurs                                           |
-| `starterkit.update`   | Administrateurs                                           |
-| `starterkit.delete`   | Administrateurs                                           |
+| Nom des permissions   | Utilisateurs autorisés                                   |
+|-----------------------|----------------------------------------------------------|
+| `starterkit.index `   | Utilisateurs non connectés, connectés et administrateurs |
+| `starterkit.admin`    | Administrateurs                                          |
+| `starterkit.created`  | **Supplanté par la permission `starterkit.admin`**       |
+| `starterkit.edited`   | **Supplanté par la permission `starterkit.admin`**       |
+| `starterkit.deleted`  | **Supplanté par la permission `starterkit.admin`**       |
 
 Il implémente également le hook `install.menu` pour créer un lien dans le menu principal et d'administration.
 
@@ -62,11 +59,10 @@ Il implémente également le hook `install.menu` pour créer un lien dans le men
 
 Le module est fournit avec 4 vues de base :
 
-* `form-starterkit-create.php` pour le formulaire de création,
-* `form-starterkit-edit.php` pour le formulaire d'édition,
-* `page-starterkit-admin.php` pour votre page d'administration,
-* `page-starterkit-index.php` pour votre page d'accueil,
-* `page-starterkit-show.php` pour voir du contenu.
+* `content-starterkit-form.php` pour le formulaire de création et d'édition,
+* `content-starterkit-admin.php` pour votre page d'administration,
+* `content-starterkit-index.php` pour votre page d'accueil,
+* `content-starterkit-show.php` pour voir du contenu.
 
 # Requirements
 
@@ -74,11 +70,11 @@ Starterkit module supporte jusqu'à présent toutes les versions de Soosyze CMS.
 
 ## Version PHP
 
-| Version PHP                | Starterkit module 1.x |
-|----------------------------|-----------------------|
-| <= 5.3                     | ✗ Non supporté       |
-| 5.4 / 5.5 / 5.6            | ✓ Supporté           |
-| 7.0 / 7.1 / 7.2 / 7.3.0RC3 | ✓ Supporté           |
+| Version PHP                 | Starterkit module 1.x |
+|-----------------------------|-----------------------|
+| <= 5.3                      | ✗ Non supporté       |
+| 5.4 / 5.5 / 5.6             | ✓ Supporté           |
+| 7.0 / 7.1 / 7.2 / 7.3 / 7.4 | ✓ Supporté           |
 
 # Installation
 

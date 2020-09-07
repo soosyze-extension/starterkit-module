@@ -7,22 +7,31 @@ class HookUser
     public function hookPermission(&$permission)
     {
         $permission[ 'Starterkit' ] = [
-            'starterkit.index'   => t('View'),
-            'starterkit.admin'   => t('Administrator'),
-            'starterkit.show'    => t('View content'),
-            'starterkit.created' => t('Add content'),
-            'starterkit.edited'  => t('Edit'),
-            'starterkit.delete'  => t('Delete'),
+            'starterkit.admin'   => t('Administer starterkit'),
+            'starterkit.show'    => t('View starterkit content'),
+            'starterkit.created' => t('Add starterkit content'),
+            'starterkit.edited'  => t('Edit starterkit content'),
+            'starterkit.deleted' => t('Delete starterkit content'),
         ];
+    }
+
+    public function hookStarterkitShow()
+    {
+        return [ 'starterkit.admin', 'starterkit.show' ];
     }
 
     public function hookStarterkitCreated($req)
     {
-        return 'starterkit.created';
+        return [ 'starterkit.admin', 'starterkit.created' ];
     }
 
     public function hookStarterkitEdited($id, $req)
     {
-        return 'starterkit.edited';
+        return [ 'starterkit.admin', 'starterkit.edited' ];
+    }
+
+    public function hookStarterkitDelete($id, $req)
+    {
+        return [ 'starterkit.admin', 'starterkit.deleted' ];
     }
 }

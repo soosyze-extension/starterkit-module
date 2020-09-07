@@ -2,44 +2,31 @@
 
 namespace SoosyzeExtension\Starterkit\Services;
 
-use Soosyze\Components\Form\FormBuilder;
-use Soosyze\Components\Validator\Validator;
-
-class HookConfig
+class HookConfig implements \SoosyzeCore\Config\Services\ConfigInterface
 {
-    /**
-     * @var \Soosyze\Config
-     */
-    protected $config;
-
-    public function __construct($config)
+    public function menu(&$menu)
     {
-        $this->config = $config;
-    }
-
-    public function menu(array &$menu)
-    {
-        $menu['starterkit'] = [
+        $menu[ 'starterkit' ] = [
             'title_link' => 'Starterkit'
         ];
     }
 
-    public function form(FormBuilder &$form, array $data)
+    public function form(&$form, $data, $req)
     {
         return $form->group('start-fieldset', 'fieldset', function ($form) use ($data) {
-            $form->legend('start-legend', t('Starterkit config'))
+            $form->legend('start-legend', t('Settings'))
                     ->group('start_check-group', 'div', function ($form) use ($data) {
                         $form->checkbox('start_check', [ 'checked' => $data[ 'start_check' ] ])
-                        ->label('start_check-label', '<span class="ui"></span> ' . t('Start check.'), [
+                        ->label('start_check-label', '<span class="ui"></span> ' . t('Start check'), [
                             'for' => 'start_check'
                         ]);
                     }, [ 'class' => 'form-group' ])
                     ->group('start_text-group', 'div', function ($form) use ($data) {
                         $form->label('start_text-label', t('Start text'))
                         ->text('start_text', [
-                            'class'       => 'form-control',
-                            'required'    => 1,
-                            'value'       => $data[ 'start_text' ]
+                            'class'    => 'form-control',
+                            'required' => 1,
+                            'value'    => $data[ 'start_text' ]
                         ]);
                     }, [ 'class' => 'form-group' ]);
         })
@@ -47,7 +34,7 @@ class HookConfig
                 ->submit('submit', t('Save'), [ 'class' => 'btn btn-success' ]);
     }
 
-    public function validator(Validator &$validator)
+    public function validator(&$validator)
     {
         $validator->setRules([
             'start_check'       => '!required|bool',
@@ -56,11 +43,19 @@ class HookConfig
         ]);
     }
 
-    public function before(Validator &$validator, array &$data)
+    public function before(&$validator, &$data, $id)
     {
         $data = [
             'start_check' => $validator->getInput('start_check'),
             'start_text'  => $validator->getInput('start_text')
         ];
+    }
+
+    public function after(&$validator, $data, $id)
+    {
+    }
+
+    public function files(&$inputsFile)
+    {
     }
 }

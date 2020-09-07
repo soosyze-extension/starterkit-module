@@ -1,37 +1,32 @@
 {
     "starterkit": {
         "class": "SoosyzeExtension\\Starterkit\\Services\\Starterkit",
-        "arguments": [
-            "@query"
-        ]
-    },
-    "starterkit.hook.config": {
-        "class": "SoosyzeExtension\\Starterkit\\Services\\HookConfig",
-        "arguments": [
-            "@config"
-        ],
-        "hooks": {
-            "config.edit.menu": "menu",
-            "config.edit.starterkit.form.generate": "form",
-            "config.update.starterkit.validator": "validator",
-            "config.update.starterkit.before": "before"
-        }
-    },
-    "starterkit.hook.user": {
-        "class": "SoosyzeExtension\\Starterkit\\Services\\HookUser",
-        "hooks": {
-            "user.permission.module": "hookPermission",
-            "route.starterkit.create": "hookStarterkitCreated",
-            "route.starterkit.store": "hookStarterkitCreated",
-            "route.starterkit.edit": "hookStarterkitEdited",
-            "route.starterkit.update": "hookStarterkitEdited"
-        }
+        "arguments": ["@query"]
     },
     "starterkit.install": {
         "class": "SoosyzeExtension\\Starterkit\\Install",
         "hooks": {
             "install.user": "hookInstallUser",
             "install.menu": "hookInstallMenu"
+        }
+    },
+    "starterkit.hook.config": {
+        "class": "SoosyzeExtension\\Starterkit\\Services\\HookConfig",
+        "hooks": {
+            "config.edit.menu": "menu"
+        }
+    },
+    "starterkit.hook.user": {
+        "class": "SoosyzeExtension\\Starterkit\\Services\\HookUser",
+        "hooks": {
+            "user.permission.module": "hookPermission",
+            "route.starterkit.index": "hookStarterkitShow",
+            "route.starterkit.show": "hookStarterkitShow",
+            "route.starterkit.create": "hookStarterkitCreated",
+            "route.starterkit.store": "hookStarterkitCreated",
+            "route.starterkit.edit": "hookStarterkitEdited",
+            "route.starterkit.update": "hookStarterkitEdited",
+            "route.starterkit.delete": "hookStarterkitDelete"
         }
     }
 }

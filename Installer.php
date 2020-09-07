@@ -5,11 +5,16 @@ namespace SoosyzeExtension\Starterkit;
 use Psr\Container\ContainerInterface;
 use Queryflatfile\TableBuilder;
 
-class Installer implements \SoosyzeCore\System\Migration
+class Installer extends \SoosyzeCore\System\Migration
 {
     public function getDir()
     {
         return __DIR__ . '/composer.json';
+    }
+    
+    public function boot()
+    {
+        $this->loadTranslation('fr', __DIR__ . '/Lang/fr/main.json');
     }
 
     public function install(ContainerInterface $ci)
@@ -58,8 +63,8 @@ class Installer implements \SoosyzeCore\System\Migration
                     'menu-admin', 50, -1
                 ])
                 ->values([
-                    'starterkit.index', null, 'Starterkit', 'starterkit/index', 'menu-admin',
-                    50, 1
+                    'starterkit.index', null, 'Starterkit', 'starterkit/index', 'menu-main',
+                    50, -1
                 ])
                 ->execute();
         }
@@ -70,15 +75,9 @@ class Installer implements \SoosyzeCore\System\Migration
         if ($ci->module()->has('User')) {
             $ci->query()
                 ->insertInto('role_permission', [ 'role_id', 'permission_id' ])
-                ->values([ 3, 'starterkit.index' ])
                 ->values([ 3, 'starterkit.admin' ])
                 ->values([ 3, 'starterkit.show' ])
-                ->values([ 3, 'starterkit.created' ])
-                ->values([ 3, 'starterkit.edited' ])
-                ->values([ 3, 'starterkit.delete' ])
-                ->values([ 2, 'starterkit.index' ])
                 ->values([ 2, 'starterkit.show' ])
-                ->values([ 1, 'starterkit.index' ])
                 ->values([ 1, 'starterkit.show' ])
                 ->execute();
         }
@@ -100,12 +99,12 @@ class Installer implements \SoosyzeCore\System\Migration
     public function hookUninstallMenu(ContainerInterface $ci)
     {
         if ($ci->module()->has('Menu')) {
-            $ci->query()
-                ->from('menu_link')
-                ->delete()
-                ->where('link', 'admin/starterkit')
-                ->orWhere('link', 'like', 'starterkit/%')
-                ->execute();
+            $ci->menu()->deleteLinks(function () use ($ci) {
+                return $ci->query()
+                        ->from('menu_link')
+                        ->where('key', 'like', 'starterkit%')
+                        ->fetchAll();
+            });
         }
     }
 

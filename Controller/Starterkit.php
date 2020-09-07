@@ -2,10 +2,10 @@
 
 namespace SoosyzeExtension\Starterkit\Controller;
 
-use Soosyze\Components\Form\FormBuilder;
+use Psr\Http\Message\ServerRequestInterface;
 use Soosyze\Components\Http\Redirect;
-use Soosyze\Components\Http\ServerRequest;
 use Soosyze\Components\Validator\Validator;
+use SoosyzeExtension\Starterkit\Form\FormStarterkit;
 
 class Starterkit extends \Soosyze\Controller
 {
@@ -16,126 +16,166 @@ class Starterkit extends \Soosyze\Controller
         $this->pathViews    = dirname(__DIR__) . '/Views/';
     }
 
-    public function index(ServerRequest $req)
+    public function index(ServerRequestInterface $req)
     {
         $linkShow = self::router()->getRoute('starterkit.show', [ ':id' => 1 ]);
 
         return self::template()
                 ->view('page', [
-                    'title_main' => t('Starterkit index')
+                    'title_main' => t('Starterkit home page')
                 ])
-                ->make('page.content', 'page-starterkit-index.php', $this->pathViews, [
+                ->make('page.content', 'starterkit/content-starterkit-index.php', $this->pathViews, [
                     'link_show' => $linkShow
         ]);
     }
 
-    public function admin(ServerRequest $req)
+    public function admin(ServerRequestInterface $req)
     {
-        $linkCreate = self::router()->getRoute('starterkit.create');
-        $linkEdit   = self::router()->getRoute('starterkit.edit', [ ':id' => 1 ]);
+        $messages = [];
+        if (isset($_SESSION[ 'messages' ])) {
+            $messages = $_SESSION[ 'messages' ];
+            unset($_SESSION[ 'messages' ]);
+        }
 
         return self::template()
                 ->getTheme('theme_admin')
                 ->view('page', [
-                    'title_main' => t('Starterkit admin'),
+                    'title_main' => t('Administer starterkit'),
+                    'icon'       => '<i class="fa fa-puzzle-piece" aria-hidden="true"></i>'
                 ])
-                ->make('page.content', 'page-starterkit-admin.php', $this->pathViews, [
-                    'link_create' => $linkCreate,
-                    'link_edit'   => $linkEdit
+                ->view('page.messages', $messages)
+                ->make('page.content', 'starterkit/content-starterkit-admin.php', $this->pathViews, [
+                    'link_create' => self::router()->getRoute('starterkit.create'),
+                    'link_edit'   => self::router()->getRoute('starterkit.edit', [
+                        ':id' => 1
+                    ])
         ]);
     }
 
-    public function show($id, ServerRequest $req)
+    public function show($id, ServerRequestInterface $req)
     {
         return self::template()
                 ->view('page', [
-                    'title_main' => 'Starterkit content ' . $id,
+                    'title_main' => t('Starterkit :id', [ ':id' => $id ]),
                 ])
-                ->make('page.content', 'page-starterkit-show.php', $this->pathViews, [
+                ->make('page.content', 'starterkit/content-starterkit-show.php', $this->pathViews, [
                     'id' => $id
         ]);
     }
 
-    public function create(ServerRequest $req)
+    public function create(ServerRequestInterface $req)
     {
-        $action = self::router()->getRoute('starterkit.store');
+        $values = [];
+        if (isset($_SESSION[ 'inputs' ])) {
+            $values = $_SESSION[ 'inputs' ];
+            unset($_SESSION[ 'inputs' ]);
+        }
 
-        $form = (new FormBuilder([ 'method' => 'post', 'action' => $action ]))
-            ->group('start-config-fieldset', 'fieldset', function ($form) {
-                $form->legend('start-config-legend', t('Starterkit config'))
-                ->group('title-group', 'div', function ($form) {
-                    $form->label('title-label', 'Title', [
-                        'for' => 'title'
-                    ])
-                    ->text('title', [
-                        'class'       => 'form-control',
-                        'maxlength'   => 255,
-                        'placeholder' => 'Field example',
-                        'required'    => 1
-                    ]);
-                }, [ 'class' => 'form-group' ]);
-            })
-            ->token('starterkit_create')
-            ->submit('submit', t('Save'), [ 'class' => 'btn btn-success' ]);
+        $form = (new FormStarterkit([
+                'method' => 'post',
+                'action' => self::router()->getRoute('starterkit.store')
+                ]))
+            ->setValues($values)
+            ->makeFields();
+
+        $messages = [];
+        if (isset($_SESSION[ 'messages' ])) {
+            $messages = $_SESSION[ 'messages' ];
+            unset($_SESSION[ 'messages' ]);
+        }
 
         return self::template()
                 ->getTheme('theme_admin')
                 ->view('page', [
-                    'title_main' => t('Starterkit create')
+                    'title_main' => t('Add Starterkit'),
+                    'icon'       => '<i class="fa fa-puzzle-piece" aria-hidden="true"></i>'
                 ])
-                ->make('page.content', 'form-starterkit-create.php', $this->pathViews, [
+                ->view('page.messages', $messages)
+                ->make('page.content', 'starterkit/content-starterkit-form.php', $this->pathViews, [
                     'form' => $form
         ]);
     }
 
-    public function store(ServerRequest $req)
+    public function store(ServerRequestInterface $req)
     {
-        $route = self::router()->getRoute('starterkit.admin');
+        $validator = $this->setValidator($req);
 
-        return new Redirect($route);
+        if ($validator->isValid()) {
+            $_SESSION[ 'messages' ][ 'success' ] = [ t('Your starterkit has been saved.') ];
+
+            return new Redirect(self::router()->getRoute('starterkit.admin'));
+        }
+
+        $_SESSION[ 'inputs' ]               = $validator->getInputs();
+        $_SESSION[ 'messages' ][ 'errors' ] = $validator->getKeyErrors();
+
+        return new Redirect(self::router()->getRoute('starterkit.create'));
     }
 
-    public function edit($id, ServerRequest $req)
+    public function edit($id, ServerRequestInterface $req)
     {
-        $action = self::router()->getRoute('starterkit.edit', [ ':id' => $id ]);
+        $values = [ 'title' => 'Example title' ];
+        if (isset($_SESSION[ 'inputs' ])) {
+            $values = $_SESSION[ 'inputs' ];
+            unset($_SESSION[ 'inputs' ]);
+        }
 
-        $form = (new FormBuilder([ 'method' => 'post', 'action' => $action ]))
-            ->group('title-group', 'div', function ($form) use ($id) {
-                $form->label('title-label', 'Title', [
-                    'for' => 'title'
-                ])
-                ->text('title', [
-                    'class'       => 'form-control',
-                    'maxlength'   => 255,
-                    'placeholder' => 'Field example',
-                    'required'    => 1,
-                    'value'       => $id
-                ]);
-            }, [ 'class' => 'form-group' ])
-            ->token('starterkit_edit')
-            ->submit('submit', t('Save'), [ 'class' => 'btn btn-success' ]);
+        $form = (new FormStarterkit([
+                'method' => 'post',
+                'action' => self::router()->getRoute('starterkit.edit', [ ':id' => $id ])
+                ]))
+            ->setValues($values)
+            ->makeFields();
+
+        $messages = [];
+        if (isset($_SESSION[ 'messages' ])) {
+            $messages = $_SESSION[ 'messages' ];
+            unset($_SESSION[ 'messages' ]);
+        }
 
         return self::template()
                 ->getTheme('theme_admin')
                 ->view('page', [
-                    'title_main' => t('Starterkit edit :id', [ ':id' => $id ])
+                    'title_main' => t('Edit :id starterkit', [ ':id' => $id ]),
+                    'icon'       => '<i class="fa fa-puzzle-piece" aria-hidden="true"></i>'
                 ])
-                ->make('page.content', 'form-starterkit-edit.php', $this->pathViews, [
+                ->view('page.messages', $messages)
+                ->make('page.content', 'starterkit/content-starterkit-form.php', $this->pathViews, [
                     'form' => $form
         ]);
     }
 
-    public function update($id, ServerRequest $req)
+    public function update($id, ServerRequestInterface $req)
     {
-        $route = self::router()->getRoute('starterkit.admin');
+        $validator = $this->setValidator($req);
 
-        return new Redirect($route);
+        if ($validator->isValid()) {
+            $_SESSION[ 'messages' ][ 'success' ] = [ t('Your starterkit has been saved.') ];
+
+            return new Redirect(self::router()->getRoute('starterkit.admin'));
+        }
+
+        $_SESSION[ 'inputs' ]               = $validator->getInputs();
+        $_SESSION[ 'messages' ][ 'errors' ] = $validator->getKeyErrors();
+
+        return new Redirect(self::router()->getRoute('starterkit.edit', [ ':id' => $id ]));
     }
 
-    public function delete($id, ServerRequest $req)
+    public function delete($id, ServerRequestInterface $req)
     {
-        $route = self::router()->getRoute('starterkit.admin');
+        return new Redirect(self::router()->getRoute('starterkit.admin'));
+    }
 
-        return new Redirect($route);
+    private function setValidator(ServerRequestInterface $req)
+    {
+        return (new Validator)
+                ->setRules([
+                    'title'            => 'required|string|max:255',
+                    'token_starterkit' => 'token'
+                ])
+                ->setLabel([
+                    'title' => t('Title')
+                ])
+                ->setInputs($req->getParsedBody());
     }
 }
