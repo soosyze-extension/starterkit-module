@@ -8,13 +8,6 @@ class FormStarterkit extends FormBuilder
 {
     protected $values = [ 'title' => '' ];
 
-    public function setValues(array $values)
-    {
-        $this->values = array_merge($this->values, $values);
-
-        return $this;
-    }
-
     public function makeFields()
     {
         return $this->group('starterkit-fieldset', 'fieldset', function ($form) {
@@ -32,5 +25,12 @@ class FormStarterkit extends FormBuilder
         })
                 ->token('token_starterkit')
                 ->submit('submit', t('Save'), [ 'class' => 'btn btn-success' ]);
+    }
+
+    public function setValues(array $values)
+    {
+        $this->values = array_merge($this->values, $values);
+
+        return $this;
     }
 }

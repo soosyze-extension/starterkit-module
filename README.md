@@ -7,16 +7,16 @@
 
 Pour démarrer un module Soosyze avec une base de code standard.
 
-# Sommaire
+## Sommaire
 
 * [Fonctionnalités](/README.md#fonctionnalites)
 * [Requirements](/README.md#requirements)
 * [Installation](/README.md#installation)
 * [License](/README.md#license)
 
-# Fonctionnalités
+## Fonctionnalités
 
-## Routes et contrôleurs
+### Routes et contrôleurs
 
 Il s'agit d'une base de travail CRUD (Create/Read/Update/Delete). Il est conseillé, mais pas obligatoire de suivre les mêmes routes et méthodes.
 
@@ -33,14 +33,14 @@ Il s'agit d'une base de travail CRUD (Create/Read/Update/Delete). Il est conseil
 
 *Vous pouvez utiliser les méthodes HTTP que vous souhaitez, mais seules les actions GET et POST sont fonctionnelles avec les formulaires PHP.
 
-## Services
+### Services
 
 * `starterkit` une base de service simple avec comme dépendance le service `query` pour créer des requêtes,
 * `starterkit.hook.config` service utilisant les hooks du module de configuration,
 * `starterkit.hook.user` service utilisant les hooks du module utilisateur pour les permissions,
 * `starterkit.install` pour les appels aux hooks `install.user` (pour les permissions utilisateurs) et `install.menu` (pour les liens dans le menu).
 
-## Installateur
+### Installateur
 
 La classe d'installateur est un service pour créer vos tables en base et insérer vos données.
 Il implémente le hook `install.user` pour les permissions utilisateurs.
@@ -55,7 +55,7 @@ Il implémente le hook `install.user` pour les permissions utilisateurs.
 
 Il implémente également le hook `install.menu` pour créer un lien dans le menu principal et d'administration.
 
-## Vues
+### Vues
 
 Le module est fournit avec 4 vues de base :
 
@@ -64,11 +64,11 @@ Le module est fournit avec 4 vues de base :
 * `content-starterkit-index.php` pour votre page d'accueil,
 * `content-starterkit-show.php` pour voir du contenu.
 
-# Requirements
+## Requirements
 
 Starterkit module supporte jusqu'à présent toutes les versions de Soosyze CMS.
 
-## Version PHP
+### Version PHP
 
 | Version PHP                 | Starterkit module 1.x |
 |-----------------------------|-----------------------|
@@ -76,9 +76,9 @@ Starterkit module supporte jusqu'à présent toutes les versions de Soosyze CMS.
 | 5.4 / 5.5 / 5.6             | ✓ Supporté           |
 | 7.0 / 7.1 / 7.2 / 7.3 / 7.4 | ✓ Supporté           |
 
-# Installation
+## Installation
 
-## Soosyze CMS
+### Soosyze CMS
 
 Après l'installation de Soosyze CMS sur votre serveur web (distant ou local) vous devez : 
 * Télécharger l'archive du dépôt, 
@@ -87,6 +87,6 @@ Après l'installation de Soosyze CMS sur votre serveur web (distant ou local) vo
 * Ouvrer un navigateur web, rendez-vous à l'adresse de votre site web et connectez-vous, 
 * Vous rendre dans la page `Module`, sélectionner le module `Starterkit` et cliquer sur `Enregister`.
 
-# License
+## License
 
 Starterkit module est sous licence MIT. Voir le fichier de licence pour plus d'informations.

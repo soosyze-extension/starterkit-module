@@ -1,8 +1,8 @@
 {
-    "name": "soosyze-extension/starterkit",
+    "name": "soosyze/starterkit",
     "type": "soosyze-module",
     "description": "To start your Soosyze module with a code base (CRUD, links in menus, user rights, configuration page).",
-    "version": "1.0",
+    "version": "1.0.0",
     "autoload": {
         "psr-4": {
             "SoosyzeExtension\\Starterkit\\": "/"

@@ -1,17 +1,34 @@
 <?php
 
-namespace SoosyzeExtension\Starterkit\Services;
+namespace SoosyzeExtension\Starterkit\Hook;
 
-class HookConfig implements \SoosyzeCore\Config\Services\ConfigInterface
+class Config implements \SoosyzeCore\Config\ConfigInterface
 {
-    public function menu(&$menu)
+    public function defaultValues()
     {
-        $menu[ 'starterkit' ] = [
-            'title_link' => 'Starterkit'
+        return [
+            'start_check' => '',
+            'start_text'  => false
         ];
     }
 
-    public function form(&$form, $data, $req)
+    public function after(&$validator, array $data, $id)
+    {
+    }
+
+    public function before(&$validator, array &$data, $id)
+    {
+        $data = [
+            'start_check' => $validator->getInput('start_check'),
+            'start_text'  => $validator->getInput('start_text')
+        ];
+    }
+
+    public function files(array &$inputsFile)
+    {
+    }
+
+    public function form(&$form, array $data, $req)
     {
         return $form->group('start-fieldset', 'fieldset', function ($form) use ($data) {
             $form->legend('start-legend', t('Settings'))
@@ -34,6 +51,13 @@ class HookConfig implements \SoosyzeCore\Config\Services\ConfigInterface
                 ->submit('submit', t('Save'), [ 'class' => 'btn btn-success' ]);
     }
 
+    public function menu(array &$menu)
+    {
+        $menu[ 'starterkit' ] = [
+            'title_link' => 'Starterkit'
+        ];
+    }
+
     public function validator(&$validator)
     {
         $validator->setRules([
@@ -41,21 +65,5 @@ class HookConfig implements \SoosyzeCore\Config\Services\ConfigInterface
             'start_text'        => 'required|string|max:255',
             'config_starterkit' => 'token'
         ]);
-    }
-
-    public function before(&$validator, &$data, $id)
-    {
-        $data = [
-            'start_check' => $validator->getInput('start_check'),
-            'start_text'  => $validator->getInput('start_text')
-        ];
-    }
-
-    public function after(&$validator, $data, $id)
-    {
-    }
-
-    public function files(&$inputsFile)
-    {
     }
 }

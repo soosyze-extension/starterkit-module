@@ -11,22 +11,9 @@ class Starterkit extends \Soosyze\Controller
 {
     public function __construct()
     {
-        $this->pathServices = dirname(__DIR__) . '/Config/service.json';
+        $this->pathServices = dirname(__DIR__) . '/Config/services.php';
         $this->pathRoutes   = dirname(__DIR__) . '/Config/routes.php';
         $this->pathViews    = dirname(__DIR__) . '/Views/';
-    }
-
-    public function index(ServerRequestInterface $req)
-    {
-        $linkShow = self::router()->getRoute('starterkit.show', [ ':id' => 1 ]);
-
-        return self::template()
-                ->view('page', [
-                    'title_main' => t('Starterkit home page')
-                ])
-                ->make('page.content', 'starterkit/content-starterkit-index.php', $this->pathViews, [
-                    'link_show' => $linkShow
-        ]);
     }
 
     public function admin(ServerRequestInterface $req)
@@ -49,17 +36,6 @@ class Starterkit extends \Soosyze\Controller
                     'link_edit'   => self::router()->getRoute('starterkit.edit', [
                         ':id' => 1
                     ])
-        ]);
-    }
-
-    public function show($id, ServerRequestInterface $req)
-    {
-        return self::template()
-                ->view('page', [
-                    'title_main' => t('Starterkit :id', [ ':id' => $id ]),
-                ])
-                ->make('page.content', 'starterkit/content-starterkit-show.php', $this->pathViews, [
-                    'id' => $id
         ]);
     }
 
@@ -96,20 +72,9 @@ class Starterkit extends \Soosyze\Controller
         ]);
     }
 
-    public function store(ServerRequestInterface $req)
+    public function delete($id, ServerRequestInterface $req)
     {
-        $validator = $this->setValidator($req);
-
-        if ($validator->isValid()) {
-            $_SESSION[ 'messages' ][ 'success' ] = [ t('Your starterkit has been saved.') ];
-
-            return new Redirect(self::router()->getRoute('starterkit.admin'));
-        }
-
-        $_SESSION[ 'inputs' ]               = $validator->getInputs();
-        $_SESSION[ 'messages' ][ 'errors' ] = $validator->getKeyErrors();
-
-        return new Redirect(self::router()->getRoute('starterkit.create'));
+        return new Redirect(self::router()->getRoute('starterkit.admin'));
     }
 
     public function edit($id, ServerRequestInterface $req)
@@ -145,6 +110,46 @@ class Starterkit extends \Soosyze\Controller
         ]);
     }
 
+    public function index(ServerRequestInterface $req)
+    {
+        $linkShow = self::router()->getRoute('starterkit.show', [ ':id' => 1 ]);
+
+        return self::template()
+                ->view('page', [
+                    'title_main' => t('Starterkit home page')
+                ])
+                ->make('page.content', 'starterkit/content-starterkit-index.php', $this->pathViews, [
+                    'link_show' => $linkShow
+        ]);
+    }
+
+    public function show($id, ServerRequestInterface $req)
+    {
+        return self::template()
+                ->view('page', [
+                    'title_main' => t('Starterkit :id', [ ':id' => $id ]),
+                ])
+                ->make('page.content', 'starterkit/content-starterkit-show.php', $this->pathViews, [
+                    'id' => $id
+        ]);
+    }
+
+    public function store(ServerRequestInterface $req)
+    {
+        $validator = $this->setValidator($req);
+
+        if ($validator->isValid()) {
+            $_SESSION[ 'messages' ][ 'success' ] = [ t('Your starterkit has been saved.') ];
+
+            return new Redirect(self::router()->getRoute('starterkit.admin'));
+        }
+
+        $_SESSION[ 'inputs' ]               = $validator->getInputs();
+        $_SESSION[ 'messages' ][ 'errors' ] = $validator->getKeyErrors();
+
+        return new Redirect(self::router()->getRoute('starterkit.create'));
+    }
+
     public function update($id, ServerRequestInterface $req)
     {
         $validator = $this->setValidator($req);
@@ -161,11 +166,6 @@ class Starterkit extends \Soosyze\Controller
         return new Redirect(self::router()->getRoute('starterkit.edit', [ ':id' => $id ]));
     }
 
-    public function delete($id, ServerRequestInterface $req)
-    {
-        return new Redirect(self::router()->getRoute('starterkit.admin'));
-    }
-
     private function setValidator(ServerRequestInterface $req)
     {
         return (new Validator)
@@ -173,7 +173,7 @@ class Starterkit extends \Soosyze\Controller
                     'title'            => 'required|string|max:255',
                     'token_starterkit' => 'token'
                 ])
-                ->setLabel([
+                ->setLabels([
                     'title' => t('Title')
                 ])
                 ->setInputs($req->getParsedBody());
